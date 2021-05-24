@@ -1,4 +1,5 @@
 const Article = require('../model/article')
+const Tab =require('../model/tab')
 
 /**
  * 文章中间介
@@ -49,5 +50,30 @@ module.exports ={
        }).catch(err =>{
            next(err)
        })
-   }
+   },
+   /**
+    * 获取指定文章的详情
+    */
+    getArticleById:(req,res,next) =>{
+        let id =req.params.id
+        Article.getArticleById(id).then(result =>{
+            req.article=result
+            next()
+        }).catch(err =>{
+            next(err)
+        })
+    },
+    /**
+    * 获取指定文章的标签列表
+    */
+     getTabs:(req,res,next) =>{
+        let id =req.params.id
+        Tab.getListByArticleId(id).then(results =>{
+            req.tabs=results
+            next()
+        }).catch(err =>{
+            next(err)
+        })
+    }
+
 }
