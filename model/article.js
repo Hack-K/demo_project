@@ -1,5 +1,7 @@
 /**
  * 文章数据模型
+ * resolve：传递数据至下一个.then语句中。
+ * reject：抛出一个异常，在最近的.catch()中接收并且处理他
  */
 module.exports=class Article extends require('./model'){
 
@@ -76,6 +78,37 @@ module.exports=class Article extends require('./model'){
                 resolve(results[0])
             }).catch(err=>{
                 console.log('获取指定文章的详情失败:${err.message}')
+                reject(err)
+            })
+        })
+    }
+    /**
+     * 上一篇文章
+     * @param {integer} id 当前文章的编号
+     */
+    static getPrevArticle(id){
+        return new Promise((resolve,reject)=>{
+            let sql ='SELECT id,title from article where id < ? order by id desc limit 1'
+            this.query(sql,id).then(results=>{
+                resolve(results[0])
+            }).catch(err=>{
+                console.log('获取上一篇文章失败:${err.message}')
+                reject(err)
+            })
+        })
+    }
+
+    /**
+     * 下一篇文章
+     * @param {integer} id 当前文章的编号
+     */
+     static getNextArticle(id){
+        return new Promise((resolve,reject)=>{
+            let sql ='SELECT id,title from article where id > ? order by id asc limit 1'
+            this.query(sql,id).then(results=>{
+                resolve(results[0])
+            }).catch(err=>{
+                console.log('获取下一篇文章失败:${err.message}')
                 reject(err)
             })
         })

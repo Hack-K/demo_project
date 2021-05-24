@@ -74,6 +74,31 @@ module.exports ={
         }).catch(err =>{
             next(err)
         })
+    },
+    /**
+     * 上一篇文章
+     */
+    getPrev:(req,res,next)=>{
+        let id =req.params.id
+        Article.getPrevArticle(id).then(results =>{
+            req.prev=results
+            next()
+        }).catch(err =>{
+            next(err)
+        })
+    },
+    /**
+     * 下一篇文章
+     */
+    getNext:(req,res,next)=>{
+        let id =req.params.id
+        Article.getNextArticle(id).then(results =>{
+            req.next=results
+            next()
+        }).catch(err =>{
+            next(err)
+        })
     }
+
 
 }
