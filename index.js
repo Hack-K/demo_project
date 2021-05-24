@@ -16,6 +16,10 @@ app.use(express.static('static'))
 
 //调用首页子应用
 app.use(/\/(index)?/,require('./router/index'))
+//调用文章子应用
+app.use('/article',require('./router/article'))
+//调用搜索子应用
+app.use('/search',require('./router/search'))
 
 //监听服务
 app.listen(3000)

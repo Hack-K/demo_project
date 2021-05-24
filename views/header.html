@@ -23,20 +23,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">首页</a>
                 </li>
+                <% categories.forEach(category =>{ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">link1</a>
+                    <a class="nav-link" href="/article/list/<%=category.id%>"><%= category.name %></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">link2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">link3</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">link4</a>
-                </li>
+                <% }) %>
             </ul>
-            <form class="form-inline my-2 my-lg-0 ml-5" method="get" action='/article/search'>
+            <form class="form-inline my-2 my-lg-0 ml-5" method="get" action='/search'>
                 <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="请输入关键词...">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
             </form>

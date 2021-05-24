@@ -1,3 +1,4 @@
+
 const mysql =require('mysql')
 
 
@@ -18,7 +19,7 @@ module.exports =class Model{
             port:'3306',
             user:'root',
             password:'password',
-            database:'sys'
+            database:'myblog'
         })
         Model.conn.connect(err=>{
             if(err){
