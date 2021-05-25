@@ -19,7 +19,8 @@ module.exports =class Model{
             port:'3306',
             user:'root',
             password:'password',
-            database:'myblog'
+            database:'myblog',
+            debug:true
         })
         Model.conn.connect(err=>{
             if(err){

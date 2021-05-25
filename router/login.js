@@ -15,6 +15,7 @@
  //实现登录操作
  loginApp.post('/',(req,res,next)=>{
    let {username,password}=req.body//解构赋值
+   console.log({username,password})
    User.login(username,password).then(result =>{
       if(result){
          res.redirect('/')
