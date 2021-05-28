@@ -26,5 +26,16 @@ module.exports ={
         }).catch(err =>{
             next(err)
         })
+    },
+    /**
+     * 获取总类目数
+     */
+     getCount:(req,res,next)=>{
+        Category.getCount().then(results=>{
+            req.categoryCount=results
+            next()
+        }).catch(err=>{
+            next(err)
+        })
     }
 }
