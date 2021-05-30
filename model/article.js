@@ -127,4 +127,19 @@ module.exports=class Article extends require('./model'){
             })
         })
     }
+
+        /**
+     * 获取指定页文章列表
+     */
+         static getPage(){
+            return new Promise((resolve,reject)=>{
+                let sql ='SELECT id,title,`thumbnail`,hot FROM article ORDER BY TIME DESC'
+                this.query(sql).then(results=>{
+                    resolve(results)
+                }).catch(err=>{
+                    console.log('获取文章列表失败:${err.message}')
+                    reject(err)
+                })
+            })
+        }
 }

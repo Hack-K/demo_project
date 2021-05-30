@@ -1,3 +1,4 @@
+const { getPage } = require('../model/article')
 const Article = require('../model/article')
 const Tab =require('../model/tab')
 
@@ -107,6 +108,17 @@ module.exports ={
             req.articleCount=results
             next()
         }).catch(err=>{
+            next(err)
+        })
+    },
+    /**
+     * 获取最新文章
+     */
+     getPage:(req,res,next)=>{
+        Article.getPage().then(results =>{
+            req.pageList=results
+            next()
+        }).catch(err =>{
             next(err)
         })
     }

@@ -33,6 +33,8 @@ app.use('/article',require('./router/article'))
 app.use('/search',require('./router/search'))
 //调用登录子应用
 app.use('/login',require('./router/login'))
+//调用注册子应用
+app.use('/reg',require('./router/reg'))
 
 
 //进入后台的权限验证(('/admin/?*'):给所有的后台页面加上权限验证

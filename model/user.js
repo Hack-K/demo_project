@@ -5,6 +5,22 @@ const { static } = require('express');
  */
 module.exports =class User extends require('./model'){
     /**
+     * 用户注册
+     * @param {string} username 注册账号
+     * @param {string} password 注册密码
+     */
+     static reg(username,password,email){
+        return new Promise((resolve,reject) =>{
+            let sql = 'insert into user (username,`password`,email) VALUES(?,?,?)'
+            this.query(sql,[username,password,email]).then(results=>{
+                resolve(results[0])
+            }).catch(err=>{
+                console.log('注册失败:' + err.message)
+                reject(err)
+            })
+        })
+    }
+    /**
      * 用户登录
      * @param {string} username 登录账号
      * @param {string} password 登录密码

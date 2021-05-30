@@ -216,15 +216,15 @@
     <div class="wrap">
     <div class="container">
         <h1 style="color: white; margin: 0; text-align: center">注册</h1>
-        <form>
-        <label><input type="text" placeholder="用户名"/></label>
-        <label><input type="text" placeholder="邮箱"/></label>
-        <label><input type="password" placeholder="密码" /></label>
-        <label><input type="password" placeholder="再次输入你的密码" /></label>
+        <form action="/reg" method="POST" >
+        <label><input type="text" name="username" placeholder="用户名"/></label>
+        <label><input type="password" name="password" placeholder="密码"/></label>
+        <label><input type="text" name="email" placeholder="邮箱" /></label>
+        <label><input type="password" name="password_re" placeholder="再次输入你的密码" /></label>
  
             <input type="submit" value="注册"/>
             <p class="change_link" style="text-align: center">
-                <span class="text">已经有账号了？</span>
+                <span class="text"><%=msg%></span>
                 <a href="/login" class="to_login"> Go and log in </a>
             </p>
         </form>
