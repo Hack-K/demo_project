@@ -73,7 +73,7 @@ module.exports=class Article extends require('./model'){
      */
     static getArticleById(id){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT a.id,a.title,a.content,a.`time`,a.hits,a.category_id,c.name from article a,category c where a.id =? and a.category_id = c.id'
+            let sql ='SELECT a.id,a.title,a.content,a.`time`,a.hits,a.category_id,c.name,a.`thumbnail`,a.`hot` from article a,category c where a.id =? and a.category_id = c.id'
             this.query(sql,id).then(results=>{
                 resolve(results[0])
             }).catch(err=>{
@@ -116,9 +116,13 @@ module.exports=class Article extends require('./model'){
      /**
      * 总博文数
      */
-      static getCount(){
+      static getCount(category_id,hot){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT count(1) as `count` from article'
+            let sql ='SELECT COUNT(1) AS `count` FROM article WHERE 1=1'
+
+            sql += category_id != -1 && category_id ? ` AND category_id=${category_id}` : ''
+            sql += hot != -1 && hot ? ` AND hot=${hot}` : ''
+
             this.query(sql).then(results=>{
                 resolve(results[0].count)
             }).catch(err=>{
@@ -128,18 +132,89 @@ module.exports=class Article extends require('./model'){
         })
     }
 
-        /**
+    /**
      * 获取指定页文章列表
+     * @param {integer} start 起始索引
+     * @param {integer} size 查询条目数
+     * @returns 
      */
-         static getPage(){
+         static getPage(start,size,category_id,hot){
             return new Promise((resolve,reject)=>{
-                let sql ='SELECT id,title,`thumbnail`,hot FROM article ORDER BY TIME DESC'
-                this.query(sql).then(results=>{
+                let sql ='SELECT id,title,`thumbnail`,hot FROM article where 1=1'
+
+                sql += category_id != -1 && category_id ? ` AND category_id=${category_id}` : ''
+                sql += hot != -1 && hot ? ` AND hot=${hot}` : ''
+
+                sql += ' ORDER BY `time` DESC LIMIT ?,?'
+                this.query(sql,[start,size]).then(results=>{
                     resolve(results)
                 }).catch(err=>{
-                    console.log('获取文章列表失败:${err.message}')
+                    console.log('获取指定页文章列表失败:${err.message}')
                     reject(err)
                 })
             })
         }
+        /**
+         * 设置热门
+         * @param {integer} id 文章编号
+         * @param {integer} hot 热门状态
+         * @returns 
+         */
+          static setHot(id,hot){
+            return new Promise((resolve,reject)=>{
+                let sql ='update article set hot =? where id =?'
+                this.query(sql,[hot,id]).then(results=>{
+                    resolve(results.affectedRows)
+                }).catch(err=>{
+                    console.log('设置热门失败:${err.message}')
+                    reject(err)
+                })
+            })
+        }
+
+    /**
+     * 添加文章
+     * @param {Object} article 文章对象
+     */
+     static add(article) {
+        return new Promise((resolve, reject) => {
+            let sql = 'INSERT INTO article SET ?'
+            this.query(sql, article).then(results => {
+                resolve(results.insertId)
+            }).catch(err => {
+                console.log(`添加文章失败：${err.message}`)
+                reject(err)
+            })
+        })
+    }
+    /**
+     * 删除文章
+     * @param {integer} id 文章编号
+     */
+    static del(id){
+        return new Promise((resolve,reject)=>{
+            let sql ='delete from article where id =?'
+            this.query(sql,id).then(results=>{
+                resolve(results.affectedRows)
+            }).catch(err=>{
+                console.log('删除文章失败:${err.message}')
+                reject(err)
+            })
+        })
+    }
+    /**
+     * 编辑文章
+     * @param {Object} article 文章对象
+     */
+     static edit(article) {
+        return new Promise((resolve, reject) => {
+            let sql = 'UPDATE article SET title = ?, content = ?, hot = ?, category_id = ?, thumbnail = ? WHERE id = ?'
+            this.query(sql, [article.title, article.content, article.hot, article.category_id, article.thumbnail, article.id]).then(results => {
+                resolve(results.affectedRows)
+            }).catch(err => {
+                console.log(`编辑文章失败：${err.message}`)
+                reject(err)
+            })
+        })
+    }
 }

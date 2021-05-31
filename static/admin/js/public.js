@@ -96,13 +96,14 @@ if ($('#editor').length) {
         .create(document.querySelector('#editor'), {
             language: 'zh-cn',
             ckfinder: {
-                uploadUrl: '/topic/upload'
+                uploadUrl: '/admin/article/ckeditor'
             }
         })
         .catch(error => {
             console.error(error);
         });
 }
+
 
 if ($('[type="file"]').length) {
     $('[type="file"]').next('label').css('cursor', 'pointer')
