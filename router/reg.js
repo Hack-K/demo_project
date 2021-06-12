@@ -20,9 +20,13 @@
       if(result){
          //session存储(key = value)(键值对)
          req.session.user =result
-         res.redirect('/login')
+         res.render('/reg')
+      }else if(!username){
+         res.render('reg',{msg:'用户名不能为空'})
+      }else if(!password){
+         res.render('reg',{msg:'密码不能为空'})
       }else{
-         res.render('reg',{msg:'注册失败!用户名或密码错误'})
+         res.render('reg',{msg:'注册成功，请登录'})
       }
    }).catch(err=>{
        next(err)

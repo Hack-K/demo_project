@@ -93,4 +93,5 @@ articleApp.post('/edit', article.edit, (req, res) => {
         res.render('admin/alert', { code: true, title: '失败提示', message: '文章编辑失败', url: '/admin/article/edit/' + req.body.id })
     }
 })
+
 module.exports =articleApp

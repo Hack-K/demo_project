@@ -11,7 +11,7 @@ module.exports=class Article extends require('./model'){
      */
     static getHot(num){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT id,title,content,`time` FROM article WHERE hot = 1 LIMIT ?'
+            let sql ='SELECT id,title,content,`time`,thumbnail FROM article WHERE hot = 1 LIMIT ?'
             this.query(sql,num).then(results=>{
                 resolve(results)
             }).catch(err=>{
@@ -26,7 +26,7 @@ module.exports=class Article extends require('./model'){
      */
     static getList(){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT id,title,content,`time` FROM article ORDER BY TIME DESC'
+            let sql ='SELECT id,title,content,`time`,thumbnail FROM article ORDER BY TIME DESC'
             this.query(sql).then(results=>{
                 resolve(results)
             }).catch(err=>{
@@ -41,7 +41,7 @@ module.exports=class Article extends require('./model'){
      */
      static getListByCategoryId(id){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT id,title,content,`time` FROM article WHERE category_id =? ORDER BY TIME DESC'
+            let sql ='SELECT id,title,content,`time`,thumbnail FROM article WHERE category_id =? ORDER BY TIME DESC'
             this.query(sql,id).then(results=>{
                 resolve(results)
             }).catch(err=>{
@@ -57,7 +57,7 @@ module.exports=class Article extends require('./model'){
      */
       static getListBykeyword(keyword){
         return new Promise((resolve,reject)=>{
-            let sql ='SELECT id,title,content,`time` FROM article WHERE title LIKE ? ORDER BY TIME DESC'
+            let sql ='SELECT id,title,content,`time`,thumbnail FROM article WHERE title LIKE ? ORDER BY TIME DESC'
             this.query(sql,`%${keyword}%`).then(results=>{
                 resolve(results)
             }).catch(err=>{
